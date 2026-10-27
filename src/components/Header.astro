@@ -1,0 +1,63 @@
+---
+import { portada } from "../data/portada.js";
+interface Props { inicio?: boolean; }
+const { inicio = false } = Astro.props;
+const ruta = Astro.url.pathname;
+const enlaces = [
+  { texto: "Inicio", href: "/" },
+  { texto: "Servicios", href: "/#servicios" },
+  { texto: "Nosotros", href: "/#nosotros" },
+  { texto: "Opiniones", href: "/#testimonios" },
+  { texto: "Tienda", href: "/tienda" }
+];
+---
+<header class="site-header">
+  <nav class="navbar navbar-expand-lg site-navbar" aria-label="Navegación principal">
+    <div class="container">
+      <a class="navbar-brand" href="/" aria-label="Patitas Felices, ir al inicio">
+        <img class="brand-logo" src="/img/logotipoveterinaria.jpg" width="1741" height="725" alt="Patitas Felices · Clínica veterinaria" />
+      </a>
+      <button class="navbar-toggler menu-toggle" type="button" data-menu-toggle data-bs-toggle="collapse" data-bs-target="#menu-principal" aria-controls="menu-principal" aria-expanded="false" aria-label="Abrir menú de navegación" hidden>
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16" /></svg>
+        <span>Menú</span>
+      </button>
+      <!-- Sin JavaScript, los enlaces permanecen visibles. -->
+      <div class="navbar-collapse" id="menu-principal" data-main-menu>
+        <ul class="navbar-nav mx-lg-auto">
+          {enlaces.map(enlace => (
+            <li class="nav-item"><a class:list={["nav-link", { active: enlace.href === ruta }]} href={enlace.href} aria-current={enlace.href === ruta ? "page" : undefined}>{enlace.texto}</a></li>
+          ))}
+        </ul>
+        <div class="nav-actions">
+          <a class="nav-access" href="/login" aria-current={ruta === "/login" ? "page" : undefined}>Iniciar sesión</a>
+          <a class="btn btn-primary" href="/agendar-cita" aria-current={ruta === "/agendar-cita" ? "page" : undefined}>Agendar cita</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+  {inicio && (
+    <section class="hero" aria-labelledby="portada-titulo">
+      <div class="hero-background" aria-hidden="true">
+        <img class="hero-media" src={portada.imagen} width="704" height="378" alt="" fetchpriority="high" />
+        {portada.video && (
+          <video class="hero-media" data-hero-video muted loop playsinline preload="none" poster={portada.imagen}>
+            <source src={portada.video} type={portada.tipoVideo} />
+          </video>
+        )}
+        <div class="hero-shade"></div>
+      </div>
+      <div class="container hero-content">
+        <div class="hero-copy">
+          <p class="eyebrow hero-eyebrow">Clínica veterinaria Patitas Felices</p>
+          <h1 id="portada-titulo">Son parte de tu familia.<br />Su cuidado también es el nuestro.</h1>
+          <p class="hero-description">Sabemos cuánto lo quieres. Estamos aquí para cuidarlo con un trato cercano en cada etapa de su vida.</p>
+          <div class="hero-actions">
+            <a class="btn btn-light" href="/agendar-cita">Agendar cita</a>
+            <a class="btn btn-outline-light" href="/#servicios">Conocer los servicios</a>
+          </div>
+          {portada.video && <button type="button" class="btn btn-outline-light hero-video-toggle" data-hero-video-toggle hidden>Reproducir video de fondo</button>}
+        </div>
+      </div>
+    </section>
+  )}
+</header>

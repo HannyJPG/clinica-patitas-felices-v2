@@ -1,0 +1,26 @@
+---
+import { servicios } from "../data/servicios.js";
+---
+<section id="servicios" class="section-spacing" aria-labelledby="servicios-titulo">
+  <div class="container">
+    <div class="section-heading">
+      <p class="eyebrow">Nuestros servicios</p>
+      <h2 id="servicios-titulo">Un cuidado para cada etapa.</h2>
+      <p>Elige el motivo de tu visita. Queremos conocer lo que tu mascota necesita y acompañarte con orientación clara.</p>
+    </div>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4 g-4">
+      {servicios.map(servicio => (
+        <div class="col">
+          <article class="service-card h-100">
+            <span class="service-icon" aria-hidden="true">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d={servicio.icono} /></svg>
+            </span>
+            <h3>{servicio.titulo}</h3>
+            <p>{servicio.descripcion}</p>
+            <a class="service-link" href={"/agendar-cita?servicio=" + servicio.id} aria-label={"Elegir " + servicio.titulo.toLowerCase() + " en el formulario de citas"}>Elegir este servicio <span aria-hidden="true">→</span></a>
+          </article>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

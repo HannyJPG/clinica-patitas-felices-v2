@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agendar cita | Clínica Patitas felices</title>
+  <link rel="icon" href="imagenes/logotipoveterinaria.jpg" type="image/jpeg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <h1>Clinica Patitas felices</h1>
+      <p>Sabemos cuánto lo quieres. Estamos aquí para cuidarlo.</p>
+      <nav class="site-nav" aria-label="Navegación principal">
+        <a href="index.html">Inicio</a>
+        <a href="agendar-cita.html" aria-current="page">Agendar cita</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container section-spacing" id="contenido-cita">
+    <div class="appointment-intro">
+      <span class="demo-label">Demostración</span>
+      <h2>Agendar cita</h2>
+      <p>Cuéntanos qué necesita tu mascota y elige cuándo te gustaría visitarnos.</p>
+      <p id="aviso-demostracion" class="demo-notice"><strong>Esta es una demostración.</strong> No se consulta disponibilidad ni se envían o guardan tus datos. Completar el formulario no reserva una cita real.</p>
+    </div>
+
+    <div class="row g-4 align-items-start">
+      <div class="col-12 col-lg-8">
+        <form id="formulario-cita" class="appointment-form" method="post" novalidate aria-describedby="aviso-demostracion">
+          <p>Todos los campos son obligatorios.</p>
+          <noscript><p class="demo-notice">Activa JavaScript para probar las validaciones. El formulario permanece deshabilitado y no envía datos.</p></noscript>
+          <div id="errores-cita" class="alert alert-danger" role="alert" hidden>
+            <p class="mb-2">Revisa los siguientes campos:</p>
+            <ul id="lista-errores-cita" class="mb-0"></ul>
+          </div>
+
+          <!-- Solo se habilita después de registrar el envío local de demostración. -->
+          <fieldset id="campos-cita" disabled>
+            <legend class="visually-hidden">Datos del propietario, la mascota y la cita</legend>
+            <div class="row g-3">
+              <div class="col-12 col-md-6">
+                <label class="form-label" for="propietario">Nombre del propietario</label>
+                <input class="form-control" id="propietario" name="propietario" type="text" autocomplete="name" required minlength="2" maxlength="80" aria-describedby="error-propietario">
+                <div class="invalid-feedback" id="error-propietario"></div>
+              </div>
+              <div class="col-12 col-md-6">
+                <label class="form-label" for="telefono">Teléfono de contacto</label>
+                <input class="form-control" id="telefono" name="telefono" type="tel" inputmode="tel" autocomplete="tel" required minlength="9" maxlength="25" pattern="[+]?[0-9 \(\)\-]{9,25}" aria-describedby="ayuda-telefono error-telefono">
+                <div class="form-text" id="ayuda-telefono">De 9 a 15 dígitos. Puedes incluir +, espacios, guiones o paréntesis.</div>
+                <div class="invalid-feedback" id="error-telefono"></div>
+              </div>
+              <div class="col-12 col-md-6">
+                <label class="form-label" for="mascota">Nombre de la mascota</label>
+                <input class="form-control" id="mascota" name="mascota" type="text" autocomplete="off" required maxlength="60" aria-describedby="error-mascota">
+                <div class="invalid-feedback" id="error-mascota"></div>
+              </div>
+              <div class="col-12 col-md-6">
+                <label class="form-label" for="servicio">Servicio</label>
+                <select class="form-select" id="servicio" name="servicio" required aria-describedby="error-servicio">
+                  <option value="">Selecciona un servicio</option>
+                  <option value="consulta-general">Consulta general</option>
+                  <option value="vacunacion">Vacunación</option>
+                  <option value="desparasitacion">Desparasitación</option>
+                  <option value="control">Control y seguimiento</option>
+                </select>
+                <div class="invalid-feedback" id="error-servicio"></div>
+              </div>
+              <div class="col-12 col-md-6">
+                <label class="form-label" for="fecha">Fecha deseada</label>
+                <input class="form-control" id="fecha" name="fecha" type="date" required aria-describedby="ayuda-fecha error-fecha">
+                <div class="form-text" id="ayuda-fecha">Elige hoy o una fecha posterior.</div>
+                <div class="invalid-feedback" id="error-fecha"></div>
+              </div>
+              <div class="col-12 col-md-6">
+                <label class="form-label" for="hora">Hora deseada</label>
+                <input class="form-control" id="hora" name="hora" type="time" required step="60" aria-describedby="ayuda-hora error-hora">
+                <div class="form-text" id="ayuda-hora">Hora de Lima, Perú. El horario está sujeto a disponibilidad, que esta demostración no comprueba.</div>
+                <div class="invalid-feedback" id="error-hora"></div>
+              </div>
+              <div class="col-12">
+                <label class="form-label" for="motivo">Motivo de la visita</label>
+                <textarea class="form-control" id="motivo" name="motivo" rows="4" required minlength="10" maxlength="1000" aria-describedby="ayuda-motivo error-motivo"></textarea>
+                <div class="form-text" id="ayuda-motivo">Describe el motivo en 10 a 1000 caracteres.</div>
+                <div class="invalid-feedback" id="error-motivo"></div>
+              </div>
+            </div>
+            <div class="d-flex flex-wrap gap-3 mt-4">
+              <button class="btn btn-primary" type="submit">Probar solicitud de cita</button>
+              <button class="btn btn-outline-primary" type="reset">Limpiar formulario</button>
+            </div>
+          </fieldset>
+        </form>
+
+        <section id="resultado-cita" class="appointment-result mt-4" tabindex="-1" aria-labelledby="resultado-titulo" role="status" hidden>
+          <span class="demo-label">Demostración</span>
+          <h3 id="resultado-titulo">Solicitud de demostración preparada</h3>
+          <p><strong>No se ha reservado una cita.</strong> Este resumen solo se muestra en tu pantalla. No se han enviado ni guardado tus datos y no se ha comprobado disponibilidad.</p>
+          <dl class="appointment-summary">
+            <dt>Propietario</dt><dd data-resumen="propietario"></dd>
+            <dt>Teléfono</dt><dd data-resumen="telefono"></dd>
+            <dt>Mascota</dt><dd data-resumen="mascota"></dd>
+            <dt>Servicio</dt><dd data-resumen="servicio"></dd>
+            <dt>Fecha y hora</dt><dd data-resumen="fechaHora"></dd>
+            <dt>Motivo</dt><dd data-resumen="motivo"></dd>
+          </dl>
+          <p class="mb-0">Puedes editar los campos y volver a probar.</p>
+        </section>
+      </div>
+
+      <aside class="col-12 col-lg-4" aria-labelledby="orientacion-titulo">
+        <div class="appointment-aside">
+          <img src="imagenes/imagen_famlia2.jpg" class="img-fluid appointment-aside-photo" width="696" height="375" alt="Un hombre comparte un momento con su perro en un parque">
+          <h3 id="orientacion-titulo">Un cuidado cercano</h3>
+          <p>Elige un servicio y cuéntanos el motivo de tu visita.</p>
+          <p>La fecha y la hora expresan tu preferencia. Esta demostración no confirma horarios ni crea reservas.</p>
+          <a href="index.html" class="btn btn-outline-primary">Volver al inicio</a>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p>Clinica Patitas felices</p>
+    <p>Formulario de demostración para citas veterinarias.</p>
+  </footer>
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="agendar-cita.js"></script>
+</body>
+</html>

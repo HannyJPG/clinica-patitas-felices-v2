@@ -1,0 +1,128 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const catalogoInicial = [
+  { id: 1, codigo: "VET-001", nombre: "Antipulgas Bravecto Chewable 10-20kg", categoria: "Farmacia", descripcion: "Protección oral por 12 semanas contra pulgas y garrapatas.", precio: 145.00, stock: 25 },
+  { id: 2, codigo: "VET-002", nombre: "Alimento Clínico Renal Canine 2kg", categoria: "Nutrición", descripcion: "Dieta terapéutica de soporte renal e hidratación.", precio: 89.50, stock: 18 },
+  { id: 3, codigo: "VET-003", nombre: "Shampoo Dermatológico Clorhexidina 250ml", categoria: "Higiene", descripcion: "Fórmula hipoalergénica antiséptica para piel sensible.", precio: 48.00, stock: 30 },
+  { id: 4, codigo: "VET-004", nombre: "Suplemento Omega 3 & Vitaminas Pelaje", categoria: "Suplementos", descripcion: "60 cápsulas blandas para articulaciones y brillo capilar.", precio: 65.00, stock: 20 },
+  { id: 5, codigo: "VET-005", nombre: "Collar Isabelino Ajustable Acolchado", categoria: "Accesorios", descripcion: "Recuperación postoperatoria cómoda sin roce.", precio: 35.00, stock: 15 },
+  { id: 6, codigo: "VET-006", nombre: "Kit Dental Enzimático Veterinario", categoria: "Higiene", descripcion: "Pasta enzimática y cepillo suave de doble cabezal.", precio: 42.00, stock: 12 }
+];
+---
+<Layout title="Tienda Veterinaria y Boleta PDF | Patitas Felices">
+  <main class="container section-spacing" id="contenido" tabindex="-1">
+    <div class="appointment-intro">
+      <p class="eyebrow">Vista Cliente · Patrón Facade (TiendaFacade.procesar_venta)</p>
+      <h1 id="tienda-titulo">Tienda Veterinaria y Farmacia</h1>
+      <p class="lead">Adquiere medicamentos, nutrición clínica e higiene con emisión inmediata de Boleta Electrónica PDF.</p>
+      <p class="request-notice">
+        <strong>Arquitectura Facade:</strong> Al confirmar tu compra, el Frontend invoca únicamente a <code>POST /api/tienda/checkout</code> (<code>TiendaFacade.procesar_venta()</code>), el cual descuenta el stock en la BD, registra la transacción en el CRM y genera tu Boleta PDF en memoria.
+      </p>
+    </div>
+
+    <div class="row g-4 align-items-start">
+      <div class="col-12 col-lg-8">
+        <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+          <h2 class="h4 mb-0">Catálogo clínico disponible</h2>
+          <span id="estado-catalogo" class="status-label mb-0">Sincronizado con Base de Datos</span>
+        </div>
+
+        <div id="grid-productos" class="row g-3">
+          {catalogoInicial.map(prod => (
+            <div class="col-12 col-md-6" data-producto-card={prod.id}>
+              <article class="service-card h-100">
+                <div class="d-flex justify-content-between align-items-start mb-2">
+                  <span class="status-label mb-0">{prod.categoria}</span>
+                  <span class="small-note" data-stock-badge={prod.id}>Stock: {prod.stock}</span>
+                </div>
+                <h3>{prod.nombre}</h3>
+                <p>{prod.descripcion}</p>
+                <div class="d-flex justify-content-between align-items-center mt-auto pt-2 border-top">
+                  <strong class="fs-5">S/ {prod.precio.toFixed(2)}</strong>
+                  <button
+                    type="button"
+                    class="btn btn-outline-primary btn-sm"
+                    data-seleccionar-producto={prod.id}
+                    data-nombre={prod.nombre}
+                    data-precio={prod.precio}
+                  >
+                    Añadir al pedido
+                  </button>
+                </div>
+              </article>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <aside class="col-12 col-lg-4" aria-labelledby="checkout-titulo">
+        <div class="appointment-form">
+          <span class="status-label">Subsistema Checkout</span>
+          <h2 id="checkout-titulo" class="form-section-title">Tu pedido y Boleta PDF</h2>
+
+          <div id="lista-pedido" class="mb-3">
+            <p class="small-note mb-0">Aún no has seleccionado productos del catálogo.</p>
+          </div>
+
+          <dl class="appointment-summary border-top border-bottom py-2 my-3">
+            <dt>Op. Gravada</dt><dd id="resumen-subtotal">S/ 0.00</dd>
+            <dt>I.G.V. (18%)</dt><dd id="resumen-igv">S/ 0.00</dd>
+            <dt>Total a pagar</dt><dd><strong id="resumen-total">S/ 0.00</strong></dd>
+          </dl>
+
+          <form id="formulario-checkout" method="post" novalidate>
+            <div id="alerta-checkout" class="alert alert-danger" role="alert" hidden></div>
+
+            <div class="mb-3">
+              <label class="form-label" for="cliente-nombre">Nombre o Razón Social</label>
+              <input class="form-control" id="cliente-nombre" name="cliente_nombre" type="text" required minlength="2" value="Lucía Fernández" />
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="cliente-documento">DNI o RUC</label>
+              <input class="form-control" id="cliente-documento" name="cliente_documento" type="text" required minlength="8" maxlength="11" value="74859632" />
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="metodo-pago">Método de pago</label>
+              <select class="form-select" id="metodo-pago" name="metodo_pago">
+                <option value="Yape / Plin">Yape / Plin</option>
+                <option value="Tarjeta Visa / Mastercard">Tarjeta Visa / Mastercard</option>
+                <option value="Transferencia Bancaria">Transferencia Bancaria</option>
+              </select>
+            </div>
+
+            <div class="d-grid gap-2">
+              <button id="btn-procesar-venta" type="submit" class="btn btn-primary">
+                Procesar venta (TiendaFacade)
+              </button>
+              <button id="btn-vaciar-pedido" type="button" class="btn btn-outline-primary">
+                Vaciar selección
+              </button>
+            </div>
+          </form>
+
+          <section id="resultado-boleta" class="mt-4 pt-3 border-top" aria-labelledby="boleta-emitida-titulo" role="status" hidden>
+            <span class="status-label">Boleta Electrónica generada</span>
+            <h3 id="boleta-emitida-titulo" class="h5">Comprobante <span id="boleta-numero"></span></h3>
+            <p class="small-note mb-3">
+              Stock descontado en BD, venta registrada en el CRM y documento PDF construido en memoria.
+            </p>
+            <div class="d-grid gap-2">
+              <button id="btn-descargar-pdf" type="button" class="btn btn-primary">
+                Descargar Boleta PDF
+              </button>
+              <a id="enlace-whatsapp-boleta" href="/tienda" target="_blank" rel="noopener noreferrer" class="btn btn-outline-primary">
+                Enviar constancia por WhatsApp ↗
+              </a>
+            </div>
+          </section>
+        </div>
+      </aside>
+    </div>
+  </main>
+  <script>
+    import "../scripts/tienda.js";
+  </script>
+</Layout>

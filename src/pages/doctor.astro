@@ -1,0 +1,80 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+<Layout title="Agenda e Historial Clínico (Doctor) | Patitas Felices">
+  <main class="container section-spacing" id="contenido" tabindex="-1">
+    <div class="appointment-intro">
+      <p class="eyebrow">Vista Médico Veterinario · Patrones Proxy + DoctorRoleStrategy</p>
+      <h1 id="doctor-titulo">Agenda Médica e Historial Clínico</h1>
+      <p class="lead">Gestiona las atenciones programadas, registra diagnósticos clínicos y consulta las fichas de pacientes.</p>
+      <p id="estado-proxy-doctor" class="request-notice">
+        <strong>Guardián AuthSessionProxy:</strong> Verificando sesión JWT y permisos de <code>DoctorRoleStrategy</code>...
+      </p>
+    </div>
+
+    <div class="row g-4 align-items-start">
+      <div class="col-12 col-lg-7">
+        <section class="appointment-form mb-4" aria-labelledby="agenda-citas-titulo">
+          <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+            <h2 id="agenda-citas-titulo" class="form-section-title mb-0">Citas programadas en agenda</h2>
+            <button id="btn-recargar-agenda" type="button" class="btn btn-outline-primary btn-sm">Actualizar agenda</button>
+          </div>
+          <div id="contenedor-citas-doctor" class="d-grid gap-3">
+            <p class="small-note mb-0">Cargando citas desde FastAPI (<code>GET /api/doctor/agenda</code>)...</p>
+          </div>
+        </section>
+
+        <section class="appointment-form" aria-labelledby="historial-mascotas-titulo">
+          <h2 id="historial-mascotas-titulo" class="form-section-title">Fichas de pacientes (Mascotas registradas)</h2>
+          <div id="contenedor-mascotas-doctor" class="row g-3">
+            <p class="small-note mb-0">Cargando historial clínico de pacientes...</p>
+          </div>
+        </section>
+      </div>
+
+      <aside class="col-12 col-lg-5" aria-labelledby="atencion-clinica-titulo">
+        <div class="appointment-form">
+          <span class="status-label">Evolución médica</span>
+          <h2 id="atencion-clinica-titulo" class="form-section-title">Registrar diagnóstico y tratamiento</h2>
+
+          <form id="formulario-diagnostico" method="post" novalidate>
+            <div id="alerta-doctor" class="alert alert-info" role="status" hidden></div>
+
+            <div class="mb-3">
+              <label class="form-label" for="doctor-cita-id">Cita seleccionada (ID)</label>
+              <input class="form-control" id="doctor-cita-id" name="cita_id" type="number" min="1" required value="1" />
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="doctor-cita-estado">Estado de la cita</label>
+              <select class="form-select" id="doctor-cita-estado" name="estado">
+                <option value="confirmada">Confirmada</option>
+                <option value="atendida" selected>Atendida (Alta clínica)</option>
+                <option value="pendiente">Pendiente</option>
+                <option value="cancelada">Cancelada</option>
+              </select>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="doctor-diagnostico">Diagnóstico veterinario</label>
+              <textarea class="form-control" id="doctor-diagnostico" name="diagnostico" rows="3" required>Paciente estable, temperatura normal y mucosas rosadas.</textarea>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label" for="doctor-tratamiento">Tratamiento e indicaciones</label>
+              <textarea class="form-control" id="doctor-tratamiento" name="tratamiento" rows="3" required>Control preventivo en 15 días y suplemento nutricional.</textarea>
+            </div>
+
+            <div class="d-grid gap-2">
+              <button type="submit" class="btn btn-primary">Guardar evaluación en FastAPI</button>
+              <a href="/login" class="btn btn-outline-primary">Cambiar rol en Login</a>
+            </div>
+          </form>
+        </div>
+      </aside>
+    </div>
+  </main>
+  <script>
+    import "../scripts/doctor.js";
+  </script>
+</Layout>

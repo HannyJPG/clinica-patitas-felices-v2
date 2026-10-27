@@ -1,0 +1,47 @@
+---
+interface Props { id?: string; }
+const { id = "testimonios" } = Astro.props;
+const carruselId = id + "-carrusel";
+const mensajes = [
+  { titulo: "Todo empieza por escucharte.", texto: "Nuestra forma de cuidar comienza por escucharte y comprender lo que ambos necesitan.", imagen: "/img/imagen_familia1.jpg", descripcion: "Una familia comparte un momento en el jardín con sus dos perros", ancho: 704, alto: 378 },
+  { titulo: "Su bienestar, tu tranquilidad.", texto: "Queremos acompañarte en cada etapa de su vida con un trato cercano, orientación clara y atención dedicada.", imagen: "/img/imagen_famlia2.jpg", descripcion: "Un hombre comparte un momento con su perro en un parque", ancho: 696, alto: 375 }
+];
+---
+<section id={id} class="section-spacing experiences-section" aria-labelledby={id + "-titulo"}>
+  <div class="container">
+    <div class="section-heading">
+      <p class="eyebrow">Opiniones y experiencias</p>
+      <h2 id={id + "-titulo"}>Cada familia tiene una historia.</h2>
+      <p>Mientras reunimos opiniones reales de nuestros clientes, te compartimos el compromiso que guía nuestro cuidado.</p>
+    </div>
+    <div id={carruselId} class="carousel slide testimonial-carousel" data-manual-carousel aria-label="Nuestro compromiso con las familias" aria-roledescription="carrusel">
+      <div class="carousel-inner" aria-live="polite">
+        {mensajes.map((mensaje, indice) => (
+          <div class:list={["carousel-item", { active: indice === 0 }]} role="group" aria-label={(indice + 1) + " de " + mensajes.length}>
+            <article class="testimonial-slide">
+              <figure class="testimonial-photo">
+                <img src={mensaje.imagen} width={mensaje.ancho} height={mensaje.alto} alt={mensaje.descripcion} loading="lazy" />
+                <figcaption class="visually-hidden">Fotografía ilustrativa de familias y mascotas.</figcaption>
+              </figure>
+              <div class="testimonial-copy">
+                <p class="eyebrow">Nuestro compromiso</p>
+                <h3>{mensaje.titulo}</h3>
+                <p>{mensaje.texto}</p>
+                <span class="testimonial-signature">Patitas Felices</span>
+              </div>
+            </article>
+          </div>
+        ))}
+      </div>
+      <div class="carousel-navigation" aria-label="Controles del carrusel">
+        <button class="btn btn-outline-primary carousel-arrow" type="button" data-bs-target={"#" + carruselId} data-bs-slide="prev" aria-controls={carruselId} aria-label="Mostrar mensaje anterior"><span aria-hidden="true">←</span><span class="carousel-control-label">Anterior</span></button>
+        <div class="carousel-indicators">
+          {mensajes.map((mensaje, indice) => (
+            <button type="button" data-bs-target={"#" + carruselId} data-bs-slide-to={indice} class:list={[{ active: indice === 0 }]} aria-current={indice === 0 ? "true" : undefined} aria-label={"Mostrar mensaje " + (indice + 1)}></button>
+          ))}
+        </div>
+        <button class="btn btn-outline-primary carousel-arrow" type="button" data-bs-target={"#" + carruselId} data-bs-slide="next" aria-controls={carruselId} aria-label="Mostrar mensaje siguiente"><span class="carousel-control-label">Siguiente</span><span aria-hidden="true">→</span></button>
+      </div>
+    </div>
+  </div>
+</section>

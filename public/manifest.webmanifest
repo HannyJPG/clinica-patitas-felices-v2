@@ -1,0 +1,19 @@
+{
+  "name": "Clínica Veterinaria Patitas Felices",
+  "short_name": "Patitas Felices",
+  "description": "Sistema Integral Veterinario: Citas, Tienda con Boleta PDF, Agenda Médica y CRM con 16 tablas.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#f3eeea",
+  "theme_color": "#776b5d",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/img/logotipoveterinaria.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "any maskable"
+    }
+  ]
+}

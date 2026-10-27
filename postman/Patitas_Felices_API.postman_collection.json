@@ -1,0 +1,235 @@
+{
+  "info": {
+    "_postman_id": "8e44b19e-7a91-4d30-a111-patitas2026",
+    "name": "Clínica Veterinaria Patitas Felices - FastAPI (4 Patrones GoF)",
+    "description": "Colección de Postman para sustentar los endpoints RESTful en FastAPI y los 4 patrones de diseño (Proxy, Strategy + RBAC, Adapter, Facade).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://127.0.0.1:8000",
+      "type": "string"
+    },
+    {
+      "key": "jwtToken",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "1. Autenticación y Strategy + RBAC",
+      "item": [
+        {
+          "name": "Login como Cliente (ClientRoleStrategy)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const json = pm.response.json();",
+                  "if (json.token) pm.collectionVariables.set('jwtToken', json.token);",
+                  "pm.test('Status 200 y ruta /tienda', () => {",
+                  "  pm.response.to.have.status(200);",
+                  "  pm.expect(json.rbac.ruta_principal).to.eql('/tienda');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"cliente@patitasfelices.pe\",\n  \"password\": \"cliente123\"\n}"
+            },
+            "url": "{{baseUrl}}/api/auth/login"
+          }
+        },
+        {
+          "name": "Login como Doctor (DoctorRoleStrategy)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const json = pm.response.json();",
+                  "if (json.token) pm.collectionVariables.set('jwtToken', json.token);",
+                  "pm.test('Status 200 y ruta /doctor', () => {",
+                  "  pm.response.to.have.status(200);",
+                  "  pm.expect(json.rbac.ruta_principal).to.eql('/doctor');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"doctor@patitasfelices.pe\",\n  \"password\": \"doctor123\"\n}"
+            },
+            "url": "{{baseUrl}}/api/auth/login"
+          }
+        },
+        {
+          "name": "Login como Admin (AdminRoleStrategy)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const json = pm.response.json();",
+                  "if (json.token) pm.collectionVariables.set('jwtToken', json.token);",
+                  "pm.test('Status 200 y ruta /admin', () => {",
+                  "  pm.response.to.have.status(200);",
+                  "  pm.expect(json.rbac.ruta_principal).to.eql('/admin');",
+                  "});"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@patitasfelices.pe\",\n  \"password\": \"admin123\"\n}"
+            },
+            "url": "{{baseUrl}}/api/auth/login"
+          }
+        },
+        {
+          "name": "Login Cuenta Inactiva (Bloqueado por Proxy)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"inactivo@patitasfelices.pe\",\n  \"password\": \"inactivo123\"\n}"
+            },
+            "url": "{{baseUrl}}/api/auth/login"
+          }
+        }
+      ]
+    },
+    {
+      "name": "2. Tienda y Checkout PDF (Patrón Facade)",
+      "item": [
+        {
+          "name": "Listar Catálogo de Productos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/productos"
+          }
+        },
+        {
+          "name": "Procesar Venta + Boleta PDF (TiendaFacade.procesar_venta)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{jwtToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cliente_nombre\": \"Lucía Fernández\",\n  \"cliente_documento\": \"74859632\",\n  \"metodo_pago\": \"Yape / Plin\",\n  \"items\": [\n    { \"producto_id\": 1, \"cantidad\": 1 },\n    { \"producto_id\": 3, \"cantidad\": 2 }\n  ]\n}"
+            },
+            "url": "{{baseUrl}}/api/tienda/checkout"
+          }
+        },
+        {
+          "name": "Descargar Boleta PDF Generada en Memoria",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/api/tienda/boleta/1/pdf"
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. Citas y WhatsApp (Patrón Adapter)",
+      "item": [
+        {
+          "name": "Registrar Cita y Generar Enlace WhatsApp",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{jwtToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"propietario\": \"Lucía Fernández\",\n  \"telefono\": \"912345678\",\n  \"mascota_nombre\": \"Luna\",\n  \"servicio\": \"consulta-general\",\n  \"fecha\": \"2026-11-10\",\n  \"hora\": \"10:30\",\n  \"motivo\": \"Control anual de salud y revisión dermatológica.\"\n}"
+            },
+            "url": "{{baseUrl}}/api/citas"
+          }
+        }
+      ]
+    },
+    {
+      "name": "4. Agenda e Historial Médico (Rol Doctor)",
+      "item": [
+        {
+          "name": "Ver Agenda e Historial Clínico",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{jwtToken}}" }],
+            "url": "{{baseUrl}}/api/doctor/agenda"
+          }
+        },
+        {
+          "name": "Actualizar Diagnóstico y Tratamiento de Cita",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{jwtToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"estado\": \"atendida\",\n  \"diagnostico\": \"Paciente en excelente condición física.\",\n  \"tratamiento\": \"Suplemento Omega 3 por 30 días.\"\n}"
+            },
+            "url": "{{baseUrl}}/api/doctor/citas/1"
+          }
+        }
+      ]
+    },
+    {
+      "name": "5. CRM y Dashboard (Rol Admin + Proxy)",
+      "item": [
+        {
+          "name": "Obtener Métricas y Tablas del CRM",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{jwtToken}}" }],
+            "url": "{{baseUrl}}/api/admin/crm"
+          }
+        },
+        {
+          "name": "Cambiar Estado de Usuario (Activo / Inactivo)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "Authorization", "value": "Bearer {{jwtToken}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"estado\": \"activo\"\n}"
+            },
+            "url": "{{baseUrl}}/api/admin/usuarios/3/estado"
+          }
+        }
+      ]
+    }
+  ]
+}

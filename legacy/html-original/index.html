@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clinica Veterinaria Patitas felices Web</title>
+  <link rel="icon" href="imagenes/logotipoveterinaria.jpg" type="image/jpeg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <!-- Primero Bootstrap local; después nuestras personalizaciones. -->
+  <link rel="stylesheet" href="assets/vendor/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <h1>Clinica Patitas felices</h1>
+      <p>Sabemos cuánto lo quieres. Estamos aquí para cuidarlo.</p>
+      <nav class="site-nav" aria-label="Novedades de la clínica">
+        <a href="agendar-cita.html">Agendar cita</a>
+        <a href="soon.html" target="_blank" rel="noopener">Más novedades aquí!</a>
+      </nav>
+      <button id="toggle-cart" class="btn btn-outline-light cart-toggle" type="button" data-bs-toggle="offcanvas" data-bs-target="#cart" aria-controls="cart">
+        Carrito (<span id="cart-count">0</span>)
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="container section-spacing" aria-labelledby="familias-titulo">
+      <h2 id="familias-titulo" class="text-center">Cuidamos a quienes son parte de tu familia</h2>
+      <!-- Fotografías locales completas, sin imágenes de ejemplo ni reproducción automática. -->
+      <div id="carrusel-familias" class="carousel slide family-carousel" aria-label="Familias y sus mascotas" aria-roledescription="carrusel">
+        <div class="carousel-inner">
+          <div class="carousel-item active" role="group" aria-label="1 de 2">
+            <div class="carousel-media">
+              <img src="imagenes/imagen_familia1.jpg" class="carousel-photo" width="704" height="378" alt="Una familia comparte un momento en el jardín con sus dos perros" fetchpriority="high">
+            </div>
+            <div class="carousel-copy">
+              <h3>Su bienestar empieza con un cuidado cercano</h3>
+              <p>Sabemos cuánto lo quieres. Estamos aquí para cuidarlo.</p>
+              <a href="agendar-cita.html" class="btn btn-primary">Agendar cita</a>
+            </div>
+          </div>
+          <div class="carousel-item" role="group" aria-label="2 de 2">
+            <div class="carousel-media">
+              <img src="imagenes/imagen_famlia2.jpg" class="carousel-photo" width="696" height="375" alt="Un hombre acaricia a su perro en un parque" loading="lazy">
+            </div>
+            <div class="carousel-copy">
+              <h3>Acompañamos cada etapa de su vida</h3>
+              <p>Un trato cercano para tu mascota y tranquilidad para ti.</p>
+              <a href="agendar-cita.html" class="btn btn-primary">Agendar cita</a>
+            </div>
+          </div>
+        </div>
+        <div class="carousel-navigation" aria-label="Controles del carrusel">
+          <button class="btn btn-outline-primary" type="button" data-bs-target="#carrusel-familias" data-bs-slide="prev" aria-controls="carrusel-familias" aria-label="Mostrar fotografía anterior">Anterior</button>
+          <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carrusel-familias" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Mostrar fotografía 1"></button>
+            <button type="button" data-bs-target="#carrusel-familias" data-bs-slide-to="1" aria-label="Mostrar fotografía 2"></button>
+          </div>
+          <button class="btn btn-outline-primary" type="button" data-bs-target="#carrusel-familias" data-bs-slide="next" aria-controls="carrusel-familias" aria-label="Mostrar fotografía siguiente">Siguiente</button>
+        </div>
+      </div>
+    </section>
+
+    <article id="patitas" class="container section-spacing">
+      <h2>Sobre Nosotros</h2>
+      <h3>Nos une el cariño por quienes son parte de tu familia</h3>
+      <p>Sabemos que detrás de cada mascota hay una historia, momentos compartidos y mucho amor. Por eso, nuestra forma de cuidar comienza por escucharte y comprender lo que ambos necesitan.
+
+Queremos acompañarte en cada etapa de su vida con un trato cercano, orientación clara y atención dedicada. Porque cuidar de su bienestar también es cuidar de tu tranquilidad.</p>
+      <!-- El destino anterior, #reserva, no existía. -->
+      <a href="#productos" class="btn btn-primary btn-ir-a-comprar">Ir a comprar</a>
+      <a href="agendar-cita.html" class="btn btn-outline-primary appointment-link">Agendar cita</a>
+    </article>
+
+    <article id="about-us" class="about-section section-spacing">
+      <div class="container">
+        <div class="about-wrapper row g-4 align-items-center">
+          <div class="about-text col-12 col-lg-8">
+            <h2>La confianza de quienes nos eligen</h2>
+            <!-- Grid de comentarios verticales -->
+            <div class="cards-vertical-container"></div>
+            <!-- Se conserva el contenido previo de Minny & Cookies. -->
+            <header class="brand-header">
+              <h2>Minny &amp; Cookies</h2>
+              <nav class="site-nav" aria-label="Novedades de Minny & Cookies">
+                <a href="soon.html" target="_blank" rel="noopener">Más novedades aquí!</a>
+              </nav>
+              <button id="toggle-cart-catalogo" class="btn btn-outline-light cart-toggle" type="button" data-bs-toggle="offcanvas" data-bs-target="#cart-catalogo" aria-controls="cart-catalogo">
+                Carrito (<span id="cart-count-catalogo">0</span>)
+              </button>
+            </header>
+            <section id="minny">
+              <h3>¿Qué somos?</h3>
+              <p>Nuestra meta es abrir una cafetería donde puedas disfrutar de un momento bonito, rico y acogedor. Queremos llegar a más personas, con más productos, y seguir endulzando caminos.
+Minny &amp; Cookies es una pequeña tienda artesanal dedicada a la creación de postres caseros que endulzan cada momento. Nacimos con el sueño de llevar un pedacito de felicidad en cada mordida, y poco a poco
+vamos creciendo para ofrecerte más delicias. Muy pronto, nuestro catálogo estará lleno de sorpresas para que te des ese gustito que tanto mereces.</p>
+            </section>
+          </div>
+          <div class="about-image col-12 col-lg-4">
+            <img class="img-fluid" src="imgs/about-us.jpg" alt="Nuestro equipo">
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article id="productos" class="productos section-spacing" aria-label="Productos">
+      <div class="container">
+        <!-- Las columnas controlan el ancho; .producto controla su apariencia. -->
+        <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
+          <div class="col">
+            <div class="producto h-100">
+              <img class="img-fluid" src="imgs/productos/pack-3-galletas-clasicas.png" alt="Pack de 3 Galletas Clásicas">
+              <h2>Pack 3 - Galletas Clásicas</h2>
+              <p><strong>Precio:</strong> S/ 2.00</p>
+              <button type="button" class="btn btn-primary add-to-cart" data-name="Pack 3 - Galletas Clásicas" data-price="2.00">Añadir al carrito</button>
+            </div>
+          </div>
+          <div class="col">
+            <div class="producto h-100">
+              <img class="img-fluid" src="imgs/productos/pack-5-galletas-clasicas.png" alt="Pack de 5 Galletas Clásicas">
+              <h2>Pack 5 - Galletas Clásicas</h2>
+              <p><strong>Precio:</strong> S/ 3.00</p>
+              <button type="button" class="btn btn-primary add-to-cart" data-name="Pack 5 - Galletas Clásicas" data-price="3.00">Añadir al carrito</button>
+            </div>
+          </div>
+          <div class="col">
+            <div class="producto h-100">
+              <img class="img-fluid" src="imgs/productos/keke-de-platano.png" alt="Keke de Plátano">
+              <h2>Keke de Plátano</h2>
+              <p><strong>Precio:</strong> S/ 2.00</p>
+              <button type="button" class="btn btn-primary add-to-cart" data-name="Keke de Plátano" data-price="2.00">Añadir al carrito</button>
+            </div>
+          </div>
+          <div class="col">
+            <div class="producto h-100">
+              <img class="img-fluid" src="imgs/productos/muffin-de-chocochips.png" alt="Muffin de Chocochips">
+              <h2>Muffin de Chocochips</h2>
+              <p><strong>Precio:</strong> S/ 3.00</p>
+              <button type="button" class="btn btn-primary add-to-cart" data-name="Muffin de Chocochips" data-price="3.00">Añadir al carrito</button>
+            </div>
+          </div>
+          <div class="col">
+            <div class="producto h-100">
+              <img class="img-fluid" src="imgs/productos/gelatina.png" alt="Gelatina">
+              <h2>Gelatina</h2>
+              <p><strong>Precio:</strong> S/ 1.50</p>
+              <button type="button" class="btn btn-primary add-to-cart" data-name="Gelatina" data-price="1.50">Añadir al carrito</button>
+            </div>
+          </div>
+          <div class="col">
+            <div class="producto h-100">
+              <img class="img-fluid" src="imgs/productos/pepsi-355ml.png" alt="Pepsi 355ml">
+              <h2>Pepsi Personal 355ml</h2>
+              <p><strong>Precio:</strong> S/ 1.50</p>
+              <button type="button" class="btn btn-primary add-to-cart" data-name="Pepsi 355ml" data-price="1.50">Añadir al carrito</button>
+            </div>
+          </div>
+        </div>
+        <div class="text-center">
+          <a href="#productos" class="btn btn-primary btn-ir-a-comprar">Ir a comprar</a>
+        </div>
+        <!-- El producto de ejemplo "???" del original sigue sin publicarse. -->
+      </div>
+    </article>
+
+    <article id="about-us-equipo" class="about-section section-spacing">
+      <div class="container">
+        <div class="about-wrapper row g-4 align-items-center">
+          <div class="about-text col-12 col-lg-8">
+            <h2>Sobre nosotros</h2>
+            <p>Somos un grupo de estudiantes universitarios con una pasión compartida: la repostería. Más allá de cubrir gastos, encontramos en ella una forma de expresarnos y compartir alegría a través de cada dulce.</p>
+            <p>Empezamos vendiendo en nuestras universidades —UPN Chorrillos y la Universidad Autónoma del Perú— y cada venta nos acerca un paso más a nuestro gran sueño.</p>
+            <p>Nuestra meta es abrir una cafetería donde puedas disfrutar de un momento bonito, rico y acogedor. Queremos llegar a más personas, con más productos, y seguir endulzando caminos.</p>
+          </div>
+          <div class="about-image col-12 col-lg-4">
+            <img class="img-fluid" src="imgs/about-us.jpg" alt="Nuestro equipo">
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <section id="testimonios" class="testimonios section-spacing">
+      <div class="container">
+        <h2>Lo que dicen nuestros clientes</h2>
+        <div class="testimonio">
+          <p>"Las galletas están buenísimas, quiero 5 más para mañana!"</p>
+          <p><strong>- Matheuw</strong></p>
+        </div>
+        <div class="testimonio">
+          <p>"Si es posible, trae galletas todos los días, yo compraré."</p>
+          <p><strong>- Sebastián</strong></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Se conserva también el catálogo por categorías del original. -->
+    <article id="productos-categorias" class="productos section-spacing" aria-label="Productos por categorías">
+      <div class="container">
+        <h2 class="categoria-titulo">Galletas</h2>
+        <p class="categoria-descripcion">Lo especiales de Minny, galletas de todo tipo.</p>
+        <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
+          <div class="col">
+            <div class="producto galleta h-100">
+              <img class="img-fluid" src="imgs/productos/pack-3-galletas-clasicas.png" alt="Pack de 3 Galletas Clásicas">
+              <h3>Pack 3 - Galletas Clásicas</h3>
+              <p><strong>Precio:</strong> S/ 2.00</p>
+              <button type="button" class="btn btn-primary add-to-cart" data-name="Pack 3 - Galletas Clásicas" data-price="2.00">Añadir al carrito</button>
+            </div>
+          </div>
+          <div class="col">
+            <div class="producto galleta h-100">
+              <img class="img-fluid" src="imgs/productos/pack-5-galletas-clasicas.png" alt="Pack de 5 Galletas Clásicas">
+              <h3>Pack 5 - Galletas Clásicas</h3>
+              <p><strong>Precio:</strong> S/ 3.00</p>
+              <button type="button" class="btn btn-primary add-to-cart" data-name="Pack 5 - Galletas Clásicas" data-price="3.00">Añadir al carrito</button>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="categoria-titulo">Postres</h2>
+        <p class="categoria-descripcion">Ricos postres para endulzar el cuerpo.</p>
+        <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
+          <div class="col">
+            <div class="producto postre h-100">
+              <img class="img-fluid" src="imgs/productos/keke-de-platano.png" alt="Keke de Plátano">
+              <h3>Keke de Plátano</h3>
+              <p><strong>Precio:</strong> S/ 2.00</p>
+              <button type="button" class="btn btn-primary add-to-cart" data-name="Keke de Plátano" data-price="2.00">Añadir al carrito</button>
+            </div>
+          </div>
+          <div class="col">
+            <div class="producto postre h-100">
+              <img class="img-fluid" src="imgs/productos/muffin-de-chocochips.png" alt="Muffin de Chocochips">
+              <h3>Muffin de Chocochips</h3>
+              <p><strong>Precio:</strong> S/ 3.00</p>
+              <button type="button" class="btn btn-primary add-to-cart" data-name="Muffin de Chocochips" data-price="3.00">Añadir al carrito</button>
+            </div>
+          </div>
+          <div class="col">
+            <div class="producto h-100">
+              <img class="img-fluid" src="imgs/productos/gelatina.png" alt="Gelatina">
+              <h2>Gelatina</h2>
+              <p><strong>Precio:</strong> S/ 1.50</p>
+              <button type="button" class="btn btn-primary add-to-cart" data-name="Gelatina" data-price="1.50">Añadir al carrito</button>
+            </div>
+          </div>
+        </div>
+
+        <h2 class="categoria-titulo">Bebidas</h2>
+        <p class="categoria-descripcion">Para calmar la sed.</p>
+        <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
+          <div class="col">
+            <div class="producto bebida h-100">
+              <img class="img-fluid" src="imgs/productos/pepsi-355ml.png" alt="Pepsi 355ml">
+              <h3>Pepsi Personal 355ml</h3>
+              <p><strong>Precio:</strong> S/ 1.50</p>
+              <button type="button" class="btn btn-primary add-to-cart" data-name="Pepsi 355ml" data-price="1.50">Añadir al carrito</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <footer class="site-footer">
+      <p>Minny &amp; Cookies</p>
+      <p>&copy; Copyright 2025. Todos los derechos reservados.</p>
+    </footer>
+
+    <section id="testimonios-adicionales" class="testimonios section-spacing">
+      <div class="container">
+        <h2>Lo que dicen nuestros clientes</h2>
+        <div class="testimonio">
+          <p>"Las galletas están buenísimas, quiero 5 más para mañana!"</p>
+          <p><strong>- Matheuw</strong></p>
+        </div>
+        <div class="testimonio">
+          <p>"Si es posible, trae galletas todos los días, yo compraré."</p>
+          <p><strong>- Sebastián</strong></p>
+        </div>
+      </div>
+    </section>
+
+    <section id="contacto-personalizado" class="section-spacing">
+      <div class="container">
+        <h2>¿Tienes un antojo especial?</h2>
+        <p>Haznos tu pedido personalizado o contáctanos directamente.</p>
+        <button type="button" id="btn-contacto" class="btn btn-primary">Contáctanos por WhatsApp</button>
+      </div>
+    </section>
+  </main>
+
+  <!-- Bootstrap controla visibilidad, fondo, foco y cierre con Escape. -->
+  <aside id="cart" class="offcanvas offcanvas-end cart-panel" tabindex="-1" aria-labelledby="cart-title">
+    <div class="offcanvas-header">
+      <h2 id="cart-title" class="offcanvas-title">Carrito de compras</h2>
+    </div>
+    <div class="offcanvas-body">
+      <hr>
+      <ul id="cart-items" class="cart-items"></ul>
+      <p id="total">Total: S/ 0.00</p>
+      <hr>
+      <div class="d-flex flex-wrap gap-2">
+        <button type="button" id="checkout" class="btn btn-primary">Comprar</button>
+        <button type="button" id="close-cart" class="btn btn-outline-primary" data-bs-dismiss="offcanvas">Cerrar</button>
+      </div>
+    </div>
+  </aside>
+
+  <aside id="cart-catalogo" class="offcanvas offcanvas-end cart-panel" tabindex="-1" aria-labelledby="cart-title-catalogo">
+    <div class="offcanvas-header">
+      <h2 id="cart-title-catalogo" class="offcanvas-title">Carrito de compras</h2>
+    </div>
+    <div class="offcanvas-body">
+      <hr>
+      <ul id="cart-items-catalogo" class="cart-items"></ul>
+      <p id="total-catalogo">Total: S/ 0.00</p>
+      <hr>
+      <div class="d-flex flex-wrap gap-2">
+        <button type="button" id="checkout-catalogo" class="btn btn-primary">Comprar</button>
+        <button type="button" id="close-cart-catalogo" class="btn btn-outline-primary" data-bs-dismiss="offcanvas">Cerrar</button>
+      </div>
+    </div>
+  </aside>
+
+  <footer class="site-footer">
+    <p>Minny &amp; Cookies</p>
+    <p>&copy; Copyright 2025. Todos los derechos reservados.</p>
+  </footer>
+
+  <!-- bundle incluye Popper. Se carga una sola vez y antes de nuestro JS. -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="funciones.js"></script>
+</body>
+</html>

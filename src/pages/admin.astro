@@ -1,0 +1,85 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+<Layout title="CRM y Dashboard Administrativo | Patitas Felices">
+  <main class="container section-spacing" id="contenido" tabindex="-1">
+    <div class="appointment-intro">
+      <p class="eyebrow">Vista Administrador · Patrones Proxy + AdminRoleStrategy + Facade</p>
+      <h1 id="admin-titulo">CRM y Dashboard Ejecutivo</h1>
+      <p class="lead">Supervisa métricas financieras, boletas electrónicas emitidas, stock de farmacia y estados de usuarios RBAC.</p>
+      <p id="estado-proxy-admin" class="request-notice">
+        <strong>Guardián AuthSessionProxy:</strong> Verificando sesión JWT y privilegios de <code>AdminRoleStrategy</code>...
+      </p>
+    </div>
+
+    <section class="row g-3 mb-4" aria-label="Indicadores clave del CRM">
+      <div class="col-6 col-lg-3">
+        <div class="service-card h-100">
+          <span class="small-note">Ingresos Tienda (S/)</span>
+          <strong id="kpi-ingresos" class="fs-3 mt-1">S/ 0.00</strong>
+        </div>
+      </div>
+      <div class="col-6 col-lg-3">
+        <div class="service-card h-100">
+          <span class="small-note">Boletas emitidas</span>
+          <strong id="kpi-ventas" class="fs-3 mt-1">0</strong>
+        </div>
+      </div>
+      <div class="col-6 col-lg-3">
+        <div class="service-card h-100">
+          <span class="small-note">Usuarios activos</span>
+          <strong id="kpi-usuarios" class="fs-3 mt-1">0 / 0</strong>
+        </div>
+      </div>
+      <div class="col-6 col-lg-3">
+        <div class="service-card h-100">
+          <span class="small-note">Stock total unidades</span>
+          <strong id="kpi-stock" class="fs-3 mt-1">0</strong>
+        </div>
+      </div>
+    </section>
+
+    <div class="row g-4 align-items-start">
+      <div class="col-12 col-lg-7">
+        <section class="appointment-form mb-4" aria-labelledby="crm-usuarios-titulo">
+          <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+            <h2 id="crm-usuarios-titulo" class="form-section-title mb-0">Usuarios y control de estado (Proxy + RBAC)</h2>
+            <button id="btn-refrescar-crm" type="button" class="btn btn-outline-primary btn-sm">Sincronizar CRM</button>
+          </div>
+          <p class="small-note mb-3">
+            Si cambias un usuario a <strong>inactivo</strong>, el patrón <code>AuthSessionProxy</code> bloqueará inmediatamente sus peticiones y su inicio de sesión.
+          </p>
+          <div id="tabla-usuarios-crm" class="d-grid gap-2">
+            <p class="small-note mb-0">Cargando usuarios desde FastAPI...</p>
+          </div>
+        </section>
+
+        <section class="appointment-form" aria-labelledby="crm-ventas-titulo">
+          <h2 id="crm-ventas-titulo" class="form-section-title">Transacciones y Boletas PDF (TiendaFacade)</h2>
+          <div id="tabla-ventas-crm" class="d-grid gap-2">
+            <p class="small-note mb-0">Cargando historial de ventas registradas...</p>
+          </div>
+        </section>
+      </div>
+
+      <aside class="col-12 col-lg-5" aria-labelledby="crm-inventario-titulo">
+        <div class="appointment-form">
+          <span class="status-label">Subsistema Inventario</span>
+          <h2 id="crm-inventario-titulo" class="form-section-title">Control de stock en tiempo real</h2>
+          <div id="lista-inventario-crm" class="d-grid gap-2 mb-4">
+            <p class="small-note mb-0">Cargando inventario...</p>
+          </div>
+          <div class="d-grid gap-2">
+            <a href="http://127.0.0.1:8000/visor-bd" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Abrir Visor de Base de Datos (16 Tablas) ↗</a>
+            <button type="button" class="btn btn-outline-primary" data-instalar-app>Descargar / Abrir como App (PWA)</button>
+            <a href="/tienda" class="btn btn-outline-primary">Ir a la Tienda (Probar compra)</a>
+            <a href="/doctor" class="btn btn-outline-primary">Ver Agenda Médica</a>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </main>
+  <script>
+    import "../scripts/admin.js";
+  </script>
+</Layout>

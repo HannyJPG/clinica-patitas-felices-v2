@@ -1,0 +1,83 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+<Layout title="Iniciar sesión | Patitas Felices">
+  <main class="container section-spacing" id="contenido" tabindex="-1">
+    <div class="appointment-intro">
+      <p class="eyebrow">Seguridad Proxy JWT y Roles RBAC</p>
+      <h1 id="login-titulo">Iniciar sesión en Patitas Felices</h1>
+      <p class="lead">Accede según tu rol: Cliente (Tienda), Médico Veterinario (Agenda e Historial) o Administrador (CRM).</p>
+    </div>
+
+    <div class="row g-4 align-items-start">
+      <div class="col-12 col-lg-7">
+        <form id="formulario-login" class="appointment-form" method="post" novalidate>
+          <h2 class="form-section-title">Credenciales de acceso</h2>
+          <div id="alerta-login" class="alert alert-danger" role="alert" hidden></div>
+
+          <div class="row g-3">
+            <div class="col-12">
+              <label class="form-label" for="login-email">Correo electrónico</label>
+              <input class="form-control" id="login-email" name="email" type="email" autocomplete="username" required value="cliente@patitasfelices.pe" />
+            </div>
+            <div class="col-12">
+              <label class="form-label" for="login-password">Contraseña</label>
+              <input class="form-control" id="login-password" name="password" type="password" autocomplete="current-password" required value="cliente123" />
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button id="btn-ingresar" class="btn btn-primary" type="submit">Autenticar con FastAPI</button>
+            <button id="btn-cerrar-sesion" class="btn btn-outline-primary" type="button" hidden>Cerrar sesión activa</button>
+          </div>
+        </form>
+
+        <section id="panel-sesion-activa" class="appointment-result mt-4" aria-labelledby="sesion-titulo" role="status" hidden>
+          <span class="status-label" id="sesion-rol-etiqueta">Sesión verificada por Proxy</span>
+          <h2 id="sesion-titulo">Acceso autorizado por Strategy + RBAC</h2>
+          <p id="sesion-bienvenida" class="mb-2"></p>
+          <p class="small-note mb-3">Permisos concedidos dinámicamente por la estrategia de rol:</p>
+          <ul id="sesion-lista-permisos" class="care-values mb-4"></ul>
+          <div class="d-flex flex-wrap gap-2" id="sesion-enlaces-vistas">
+            <a id="enlace-ir-vista" href="/tienda" class="btn btn-primary">Ir a mi panel principal</a>
+            <a href="/agendar-cita" class="btn btn-outline-primary">Agendar cita</a>
+          </div>
+        </section>
+      </div>
+
+      <aside class="col-12 col-lg-5" aria-labelledby="demo-roles-titulo">
+        <div class="appointment-aside">
+          <span class="status-label">Demostración académica</span>
+          <h2 id="demo-roles-titulo">Cuentas de prueba por Rol (Strategy + Proxy)</h2>
+          <p>Selecciona un perfil para autocompletar las credenciales y sustentar el cambio dinámico de permisos RBAC frente al profesor:</p>
+
+          <div class="d-grid gap-2 mb-3">
+            <button type="button" class="btn btn-outline-primary text-start" data-demo-email="cliente@patitasfelices.pe" data-demo-pass="cliente123">
+              1. Rol Cliente (ClientRoleStrategy → /tienda)
+            </button>
+            <button type="button" class="btn btn-outline-primary text-start" data-demo-email="doctor@patitasfelices.pe" data-demo-pass="doctor123">
+              2. Rol Doctor (DoctorRoleStrategy → /doctor)
+            </button>
+            <button type="button" class="btn btn-outline-primary text-start" data-demo-email="admin@patitasfelices.pe" data-demo-pass="admin123">
+              3. Rol Admin (AdminRoleStrategy → /admin)
+            </button>
+            <button type="button" class="btn btn-outline-primary text-start" data-demo-email="inactivo@patitasfelices.pe" data-demo-pass="inactivo123">
+              4. Usuario Inactivo (Bloqueo AuthSessionProxy 403)
+            </button>
+          </div>
+
+          <p class="small-note mb-3">
+            <strong>Patrón Proxy:</strong> Antes de permitir el acceso al controlador real, <code>AuthSessionProxy</code> verifica la firma del token JWT y comprueba que <code>usuario.estado == 'activo'</code>.
+          </p>
+          <div class="d-grid gap-2">
+            <a href="http://127.0.0.1:8000/visor-bd" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-sm">Ver las 16 Tablas en Vivo (prueba_1.erd.json) ↗</a>
+            <button type="button" class="btn btn-outline-primary btn-sm" data-instalar-app>Instalar / Abrir como App (PWA)</button>
+          </div>
+        </div>
+      </aside>
+    </div>
+  </main>
+  <script>
+    import "../scripts/login.js";
+  </script>
+</Layout>

@@ -1,0 +1,20 @@
+---
+import { clinica } from "../data/clinica.js";
+import { enlaceWhatsApp } from "../scripts/whatsapp.js";
+---
+<section id="contacto" class="section-spacing contact-section" aria-labelledby="contacto-titulo">
+  <div class="container">
+    <div class="contact-panel">
+      <div>
+        <p class="eyebrow">Estamos para acompañarte</p>
+        <h2 id="contacto-titulo">El siguiente paso empieza por conocernos.</h2>
+        <p>Cuéntanos qué necesita tu mascota. Puedes preparar una solicitud o conversar directamente con la clínica.</p>
+      </div>
+      <div class="contact-actions">
+        <a href="/agendar-cita" class="btn btn-primary">Preparar solicitud de cita</a>
+        <a class="contact-phone" href={enlaceWhatsApp()} target="_blank" rel="noopener noreferrer">WhatsApp {clinica.telefonoVisible} <span aria-hidden="true">↗</span></a>
+        <p class="small-note">Atenciones de 30 minutos. La clínica confirma el horario por WhatsApp.</p>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,9 @@
+node_modules/
+.astro/
+.npm-cache/
+__pycache__/
+*.pyc
+.pytest_cache/
+playwright-report/
+test-results/
+.env

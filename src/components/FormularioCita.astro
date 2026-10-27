@@ -1,0 +1,116 @@
+---
+import SelectorServicio from "./SelectorServicio.astro";
+import { clinica } from "../data/clinica.js";
+import { enlaceWhatsApp } from "../scripts/whatsapp.js";
+---
+<div class="appointment-intro">
+  <p class="eyebrow">Citas veterinarias</p>
+  <h1>Un primer paso para cuidar de tu mascota.</h1>
+  <p class="lead">Prepara tu solicitud y compártela con la clínica por WhatsApp.</p>
+  <p id="aviso-solicitud" class="request-notice"><strong>Atenciones de {clinica.duracionCitaMinutos} minutos.</strong> Elige tu fecha y hora de preferencia. La disponibilidad y la cita se confirman directamente por WhatsApp.</p>
+</div>
+<div class="row g-4 align-items-start">
+  <div class="col-12 col-lg-8">
+    <form id="formulario-cita" class="appointment-form" method="post" novalidate aria-describedby="aviso-solicitud indicacion-campos">
+      <p id="indicacion-campos" class="small-note mb-4">Todos los campos son obligatorios.</p>
+      <noscript><p class="request-notice">Activa JavaScript para preparar la solicitud o <a href={enlaceWhatsApp()} target="_blank" rel="noopener noreferrer">escríbenos directamente por WhatsApp</a>.</p></noscript>
+      <div id="errores-cita" class="alert alert-danger" role="alert" hidden>
+        <p class="mb-2">Revisa los siguientes campos:</p>
+        <ul id="lista-errores-cita" class="mb-0"></ul>
+      </div>
+      <fieldset id="campos-cita" disabled>
+        <legend class="visually-hidden">Datos para preparar la solicitud de cita por WhatsApp</legend>
+        <div class="form-section">
+          <h2 class="form-section-title">1. Tus datos</h2>
+          <div class="row g-3">
+            <div class="col-12 col-md-6">
+              <label class="form-label" for="propietario">Nombre del propietario</label>
+              <input class="form-control" id="propietario" name="propietario" type="text" autocomplete="name" required minlength="2" maxlength="80" aria-describedby="error-propietario" />
+              <div class="invalid-feedback" id="error-propietario"></div>
+            </div>
+            <div class="col-12 col-md-6">
+              <label class="form-label" for="telefono">Teléfono de contacto</label>
+              <input class="form-control" id="telefono" name="telefono" type="tel" inputmode="tel" autocomplete="tel" required minlength="9" maxlength="25" aria-describedby="ayuda-telefono error-telefono" />
+              <div class="form-text" id="ayuda-telefono">De 9 a 15 dígitos. Puedes incluir el prefijo internacional.</div>
+              <div class="invalid-feedback" id="error-telefono"></div>
+            </div>
+          </div>
+        </div>
+        <div class="form-section">
+          <h2 class="form-section-title">2. La visita de tu mascota</h2>
+          <div class="row g-3">
+            <div class="col-12 col-md-6">
+              <label class="form-label" for="mascota">Nombre de la mascota</label>
+              <input class="form-control" id="mascota" name="mascota" type="text" autocomplete="off" required maxlength="60" aria-describedby="error-mascota" />
+              <div class="invalid-feedback" id="error-mascota"></div>
+            </div>
+            <div class="col-12 col-md-6">
+              <label class="form-label" for="servicio">Servicio</label>
+              <SelectorServicio />
+              <div class="invalid-feedback" id="error-servicio"></div>
+            </div>
+            <div class="col-12 col-md-6">
+              <label class="form-label" for="fecha">Fecha de preferencia</label>
+              <input class="form-control" id="fecha" name="fecha" type="date" required aria-describedby="ayuda-fecha error-fecha" />
+              <div class="form-text" id="ayuda-fecha">Elige hoy o una fecha posterior.</div>
+              <div class="invalid-feedback" id="error-fecha"></div>
+            </div>
+            <div class="col-12 col-md-6">
+              <label class="form-label" for="hora">Hora de preferencia</label>
+              <input class="form-control" id="hora" name="hora" type="time" required step={clinica.duracionCitaMinutos * 60} aria-describedby="ayuda-hora error-hora" />
+              <div class="form-text" id="ayuda-hora">Intervalos de 30 minutos: 09:00, 09:30, 10:00… Hora de Lima, Perú. Confirma el horario de atención con la clínica.</div>
+              <div class="invalid-feedback" id="error-hora"></div>
+            </div>
+            <div class="col-12">
+              <label class="form-label" for="motivo">Motivo de la visita</label>
+              <textarea class="form-control" id="motivo" name="motivo" rows="4" required minlength="10" maxlength="1000" aria-describedby="ayuda-motivo error-motivo"></textarea>
+              <div class="form-text" id="ayuda-motivo">Cuéntanos el motivo en 10 a 1000 caracteres.</div>
+              <div class="invalid-feedback" id="error-motivo"></div>
+            </div>
+          </div>
+        </div>
+        <div class="form-actions">
+          <button class="btn btn-primary" type="submit">Preparar solicitud</button>
+          <button class="btn btn-outline-primary" type="reset">Limpiar datos</button>
+        </div>
+      </fieldset>
+    </form>
+    <section id="resultado-cita" class="appointment-result mt-4" tabindex="-1" aria-labelledby="resultado-titulo" role="status" hidden>
+      <span class="status-label">Lista para revisar</span>
+      <h2 id="resultado-titulo">Tu solicitud de cita</h2>
+      <p>Revisa los datos y continúa en WhatsApp para enviarlos a la clínica. <strong>La reserva se confirma por ese medio.</strong></p>
+      <dl class="appointment-summary">
+        <dt>Propietario</dt><dd data-resumen="propietario"></dd>
+        <dt>Teléfono</dt><dd data-resumen="telefono"></dd>
+        <dt>Mascota</dt><dd data-resumen="mascota"></dd>
+        <dt>Servicio</dt><dd data-resumen="servicio"></dd>
+        <dt>Fecha y hora</dt><dd data-resumen="fechaHora"></dd>
+        <dt>Duración</dt><dd>{clinica.duracionCitaMinutos} minutos</dd>
+        <dt>Motivo</dt><dd data-resumen="motivo"></dd>
+      </dl>
+      <div class="d-flex flex-wrap gap-2">
+        <a id="continuar-whatsapp" class="btn btn-primary" target="_blank" rel="noopener noreferrer" aria-describedby="ayuda-whatsapp">Continuar en WhatsApp <span aria-hidden="true">↗</span></a>
+        <button id="guardar-cita-api" type="button" class="btn btn-outline-primary">Registrar en sistema (FastAPI)</button>
+      </div>
+      <div id="estado-api-cita" class="request-notice mt-3" role="status" hidden></div>
+      <p id="ayuda-whatsapp" class="small-note mt-3 mb-0">Se abrirá WhatsApp con tu solicitud para {clinica.telefonoVisible}. Revisa el mensaje y pulsa Enviar allí. Si editas los datos, prepara de nuevo la solicitud antes de continuar.</p>
+    </section>
+  </div>
+  <aside class="col-12 col-lg-4" aria-labelledby="orientacion-titulo">
+    <div class="appointment-aside">
+      <img src="/img/imagen_famlia2.jpg" class="appointment-aside-photo" width="696" height="375" alt="Un hombre comparte un momento con su perro en un parque" loading="lazy" />
+      <h2 id="orientacion-titulo">¿Cómo funciona?</h2>
+      <ol class="ps-3">
+        <li>Completa tus datos y los de tu mascota.</li>
+        <li>Elige un servicio y una hora en intervalos de 30 minutos.</li>
+        <li>Revisa tu solicitud y envíala por WhatsApp.</li>
+        <li>Espera la confirmación de la clínica.</li>
+      </ol>
+      <p>La web prepara el mensaje; la clínica confirma la disponibilidad.</p>
+      <a class="contact-phone" href={enlaceWhatsApp()} target="_blank" rel="noopener noreferrer">WhatsApp {clinica.telefonoVisible} <span aria-hidden="true">↗</span></a>
+    </div>
+  </aside>
+</div>
+<script>
+  import "../scripts/agendar-cita.js";
+</script>

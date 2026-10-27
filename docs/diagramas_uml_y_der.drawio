@@ -1,0 +1,57 @@
+<mxfile host="app.diagrams.net" modified="2026-10-27T05:50:00.000Z" agent="Antigravity" version="24.0.0" type="device">
+  <diagram id="uml-gof-patitas" name="1. UML Patrones GoF">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1000" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="p1" value="&lt;b&gt;1. PATRÓN PROXY (Seguridad y Sesión)&lt;/b&gt;&lt;hr&gt;ISecureController&lt;br&gt;▲&lt;br&gt;AuthSessionProxy ──► RealClinicController&lt;br&gt;+ validar_sesion(token)&lt;br&gt;+ ejecutar_accion(token, accion, params)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;align=left;spacingLeft=12;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="60" y="60" width="380" height="190" as="geometry" />
+        </mxCell>
+        <mxCell id="p2" value="&lt;b&gt;2. PATRÓN STRATEGY + RBAC (Roles)&lt;/b&gt;&lt;hr&gt;RBACContext ──► RoleAuthorizationStrategy&lt;br&gt;▲&lt;br&gt;├── ClientRoleStrategy (/tienda)&lt;br&gt;├── DoctorRoleStrategy (/doctor)&lt;br&gt;└── AdminRoleStrategy (/admin)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=left;spacingLeft=12;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="520" y="60" width="380" height="190" as="geometry" />
+        </mxCell>
+        <mxCell id="p3" value="&lt;b&gt;3. PATRÓN ADAPTER (Integraciones Externas)&lt;/b&gt;&lt;hr&gt;IDatabaseAdapter:&lt;br&gt;├── SQLiteDatabaseAdapter&lt;br&gt;├── SupabasePostgresAdapter&lt;br&gt;└── MySQLDatabaseAdapter&lt;br&gt;IWhatsAppNotificationAdapter:&lt;br&gt;└── WhatsAppAdapter (wa.me/51990853697)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;align=left;spacingLeft=12;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="60" y="320" width="380" height="210" as="geometry" />
+        </mxCell>
+        <mxCell id="p4" value="&lt;b&gt;4. PATRÓN FACADE (Checkout y Boleta PDF)&lt;/b&gt;&lt;hr&gt;TiendaFacade.procesar_venta() coordina:&lt;br&gt;1. SubsistemaInventario (descuenta stock)&lt;br&gt;2. SubsistemaCRMTransacciones (Subtotal + IGV 18%)&lt;br&gt;3. SubsistemaGeneradorPDF (PDF 1.4 en memoria)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;align=left;spacingLeft=12;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="520" y="320" width="380" height="210" as="geometry" />
+        </mxCell>
+        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="p1" target="p2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="p1" target="p3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="p4" target="p3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="der-patitas" name="2. DER Base de Datos">
+    <mxGraphModel dx="1422" dy="794" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1600" pageHeight="1000" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="t1" value="&lt;b&gt;usuarios&lt;/b&gt;&lt;hr&gt;PK id: INT&lt;br&gt;nombre: VARCHAR&lt;br&gt;email: VARCHAR (UK)&lt;br&gt;password_hash: VARCHAR&lt;br&gt;rol: ENUM(cliente,doctor,admin)&lt;br&gt;estado: ENUM(activo,inactivo)&lt;br&gt;telefono: VARCHAR" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;align=left;spacingLeft=10;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="60" y="60" width="240" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="t2" value="&lt;b&gt;mascotas&lt;/b&gt;&lt;hr&gt;PK id: INT&lt;br&gt;FK usuario_id: INT&lt;br&gt;nombre: VARCHAR&lt;br&gt;especie: VARCHAR&lt;br&gt;raza: VARCHAR&lt;br&gt;edad: INT&lt;br&gt;peso_kg: DECIMAL" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;align=left;spacingLeft=10;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="380" y="60" width="240" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="t3" value="&lt;b&gt;citas&lt;/b&gt;&lt;hr&gt;PK id: INT&lt;br&gt;FK usuario_id, mascota_id, doctor_id&lt;br&gt;propietario, telefono, mascota_nombre&lt;br&gt;servicio, fecha, hora, motivo&lt;br&gt;estado, diagnostico, tratamiento&lt;br&gt;whatsapp_url: VARCHAR" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;align=left;spacingLeft=10;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="700" y="60" width="270" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="t4" value="&lt;b&gt;ventas&lt;/b&gt;&lt;hr&gt;PK id: INT&lt;br&gt;numero_boleta: VARCHAR (UK)&lt;br&gt;FK usuario_id: INT&lt;br&gt;cliente_nombre, cliente_documento&lt;br&gt;subtotal, igv, total: DECIMAL&lt;br&gt;metodo_pago, estado" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;align=left;spacingLeft=10;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="60" y="300" width="240" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="t5" value="&lt;b&gt;detalle_ventas&lt;/b&gt;&lt;hr&gt;PK id: INT&lt;br&gt;FK venta_id: INT&lt;br&gt;FK producto_id: INT&lt;br&gt;producto_nombre: VARCHAR&lt;br&gt;cantidad: INT&lt;br&gt;precio_unitario, subtotal: DECIMAL" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;align=left;spacingLeft=10;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="380" y="300" width="240" height="170" as="geometry" />
+        </mxCell>
+        <mxCell id="t6" value="&lt;b&gt;productos&lt;/b&gt;&lt;hr&gt;PK id: INT&lt;br&gt;codigo: VARCHAR (UK)&lt;br&gt;nombre, categoria, descripcion&lt;br&gt;precio: DECIMAL&lt;br&gt;stock: INT&lt;br&gt;activo: BOOLEAN" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#ffe6cc;strokeColor=#d79b00;align=left;spacingLeft=10;verticalAlign=top;" vertex="1" parent="1">
+          <mxGeometry x="700" y="300" width="270" height="170" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
